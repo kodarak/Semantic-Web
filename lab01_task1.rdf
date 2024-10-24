@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:ex="http://example.org/terms#">
+
+    <!-- Латунь – це сплав міді та цинку -->
+    <rdf:Description rdf:about="http://example.org/brass">
+        <ex:isAlloyOf rdf:resource="http://example.org/copper"/>
+        <ex:isAlloyOf rdf:resource="http://example.org/zinc"/>
+    </rdf:Description>
+
+    <!-- SPIEGEL - німецький журнал -->
+    <rdf:Description rdf:about="http://example.org/spiegel">
+        <ex:type>Magazine</ex:type>
+        <ex:nationality>German</ex:nationality>
+        <ex:headquarters>Hamburg</ex:headquarters>
+    </rdf:Description>
+
+    <!-- Есе та його частини -->
+    <rdf:Description rdf:about="http://example.org/essay">
+        <ex:hasPart rdf:resource="http://example.org/essay/intro"/>
+        <ex:hasPart rdf:resource="http://example.org/essay/main"/>
+        <ex:hasPart rdf:resource="http://example.org/essay/conclusion"/>
+    </rdf:Description>
+
+    <!-- Павло знає про Олену -->
+    <rdf:Description rdf:about="http://example.org/pavlo">
+        <ex:knows>
+            <rdf:Description rdf:about="http://example.org/olena">
+                <ex:livesIn>Poltava</ex:livesIn>
+            </rdf:Description>
+        </ex:knows>
+    </rdf:Description>
+
+    <!-- Олена про друга -->
+    <rdf:Description rdf:about="http://example.org/olena">
+        <ex:says>
+            <rdf:Description rdf:about="http://example.org/friend">
+                <ex:livesIn>Kyiv</ex:livesIn>
+            </rdf:Description>
+        </ex:says>
+    </rdf:Description>
+
+    <!-- Стефан думає про Анну -->
+    <rdf:Description rdf:about="http://example.org/stefan">
+        <ex:thinks>
+            <rdf:Description rdf:about="http://example.org/anna">
+                <ex:knows>
+                    <rdf:Description rdf:about="http://example.org/stefan">
+                        <ex:knows rdf:resource="http://example.org/anna-father"/>
+                    </rdf:Description>
+                </ex:knows>
+            </rdf:Description>
+        </ex:thinks>
+    </rdf:Description>
+
+    <!-- Іван про Рим -->
+    <rdf:Description rdf:about="http://example.org/ivan">
+        <ex:knows>
+            <rdf:Description rdf:about="http://example.org/rome">
+                <ex:isCapitalOf rdf:resource="http://example.org/italy"/>
+            </rdf:Description>
+        </ex:knows>
+    </rdf:Description>
+
+</rdf:RDF>
