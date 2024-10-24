@@ -292,8 +292,11 @@ python lab01_task3.py
    ![image](https://github.com/user-attachments/assets/78aad1ec-9c20-4702-a75a-d6298eac62cf)
 5. У консоль виводяться:
    - Всі трійки графу
+     
      ![image](https://github.com/user-attachments/assets/a491e543-4351-4945-85bb-74cf831c452b)
    - Інформація про Емму
+     
      ![image](https://github.com/user-attachments/assets/d9b0d12a-612b-4240-8f15-76acf79afdf2)
    - Імена всіх людей
+     
      ![image](https://github.com/user-attachments/assets/84d7b15e-e515-4977-9e4f-e67a9e9a836c)
