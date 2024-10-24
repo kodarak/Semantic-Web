@@ -1,0 +1,51 @@
+@prefix ex: <http://example.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/person/cade> a foaf:Person ;
+    ex:education <http://example.org/education/cade_biology> ;
+    ex:meeting <http://example.org/meeting/cade_emma> ;
+    ex:visited "Canada"@en,
+        "France"@en,
+        "Germany"@en ;
+    schema1:address "1516 Henry Street, Berkeley, California 94709, USA" ;
+    foaf:age 30 ;
+    foaf:interest "birds"@en,
+        "ecology"@en,
+        "environment"@en,
+        "photography"@en,
+        "travel"@en ;
+    foaf:knows <http://example.org/person/emma> ;
+    foaf:name "Cade"@en .
+
+<http://example.org/education/cade_biology> ex:degree "Bachelor in Biology" ;
+    ex:graduationYear "2011"^^xsd:gYear ;
+    ex:university "University of California" .
+
+<http://example.org/education/emma_chemistry> ex:degree "Master in Chemistry" ;
+    ex:graduationYear "2015"^^xsd:gYear ;
+    ex:university "University of Valencia" .
+
+<http://example.org/person/emma> a foaf:Person ;
+    ex:education <http://example.org/education/emma_chemistry> ;
+    ex:expertise "air pollution"@en,
+        "toxic waste"@en,
+        "waste management"@en ;
+    ex:meeting <http://example.org/meeting/cade_emma> ;
+    ex:visited "Denmark"@en,
+        "France"@en,
+        "Germany"@en,
+        "Italy"@en,
+        "Portugal"@en,
+        "Sweden"@en ;
+    schema1:address "Carrer de la Guardia Civil 20, 46020 Valencia, Spain" ;
+    schema1:age 36 ;
+    foaf:interest "cycling"@en,
+        "music"@en,
+        "travel"@en ;
+    foaf:name "Emma"@en .
+
+<http://example.org/meeting/cade_emma> ex:date "2014-08"^^xsd:gYearMonth ;
+    ex:location "Paris"@en .
+
