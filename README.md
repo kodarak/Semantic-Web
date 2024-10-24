@@ -300,3 +300,94 @@ python lab01_task3.py
    - Імена всіх людей
      
      ![image](https://github.com/user-attachments/assets/84d7b15e-e515-4977-9e4f-e67a9e9a836c)
+
+# Лабораторна робота №02: SPARQL Запити
+
+## Завдання 1: Населення країн Східної Європи
+
+### SPARQL Запит
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+
+SELECT DISTINCT ?country ?countryLabel ?population
+WHERE {
+    # Вибираємо країни Східної Європи
+    ?country dct:subject dbc:Eastern_European_countries .
+    
+    # Отримуємо назву країни
+    ?country rdfs:label ?countryLabel .
+    FILTER(LANG(?countryLabel) = "en")
+    
+    # Отримуємо населення
+    ?country dbo:populationTotal ?population .
+}
+ORDER BY DESC(?population)
+```
+
+### Пояснення запиту
+1. **Префікси**:
+   - `dbo:` - DBpedia онтологія
+   - `dbr:` - DBpedia ресурси
+   - `yago:` - YAGO класифікація
+
+2. **Структура запиту**:
+   - SELECT вибирає країну, її назву та населення
+   - WHERE визначає умови пошуку
+   - ORDER BY DESC сортує за спаданням населення
+
+3. **Фільтри**:
+   - Вибір лише англійських назв
+   - Перевірка належності до Східної Європи
+
+### Результат
+|
+ Країна 
+|
+ Населення 
+|
+|
+--------
+|
+-----------
+|
+|
+ Russia 
+|
+ 143447812 
+|
+|
+ Poland 
+|
+ 38422346  
+|
+|
+ Ukraine
+|
+ 41167336  
+|
+|
+ Romania
+|
+ 19237691  
+|
+|
+ ... 
+|
+ ... 
+|
+
+### Як використати
+1. Відкрийте [DBpedia SPARQL endpoint](http://dbpedia.org/sparql)
+2. Вставте запит
+3. Натисніть "Execute"
+
+### Особливості
+- Дані оновлюються з Wikipedia
+- Можливі розбіжності через різні дати оновлення
+- Деякі країни можуть мати відсутні дані
+
+## Файли
+- `query1.sparql` - файл з SPARQL запитом
+- `README.md` - документація
