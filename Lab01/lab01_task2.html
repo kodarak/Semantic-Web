@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Книга місяця | Книжковий клуб</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .book-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .book-image {
+            max-width: 200px;
+            height: auto;
+        }
+        .rating {
+            color: gold;
+            font-size: 20px;
+        }
+    </style>
+    <!-- JSON-LD анотація -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Book",
+      "name": "Хмарний Атлас",
+      "author": {
+        "@type": "Person",
+        "name": "Девід Мітчелл"
+      },
+      "isbn": "978-3442267819",
+      "numberOfPages": 509,
+      "publisher": "Видавництво Старого Лева",
+      "datePublished": "2004-03-15",
+      "inLanguage": "uk",
+      "genre": "Наукова фантастика",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "1252"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Microdata анотація -->
+    <article itemscope itemtype="https://schema.org/Book" class="book-card">
+        <h1 itemprop="name">Хмарний Атлас</h1>
+        
+        <img itemprop="image" src="/api/placeholder/200/300" alt="Обкладинка книги Хмарний Атлас" class="book-image">
+        
+        <div>
+            <strong>Автор:</strong> 
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <span itemprop="name">Девід Мітчелл</span>
+            </span>
+        </div>
+        
+        <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+            <span class="rating">★★★★★</span>
+            <span itemprop="ratingValue">4.8</span>/5
+            на основі <span itemprop="reviewCount">1252</span> відгуків
+        </div>
+    </article>
+
+    <!-- RDFa анотація -->
+    <section vocab="https://schema.org/" typeof="Book">
+        <h2>Деталі книги</h2>
+        <ul>
+            <li>
+                <strong>ISBN:</strong>
+                <span property="isbn">978-3442267819</span>
+            </li>
+            <li>
+                <strong>Кількість сторінок:</strong>
+                <span property="numberOfPages">509</span>
+            </li>
+            <li>
+                <strong>Видавництво:</strong>
+                <span property="publisher">Видавництво Старого Лева</span>
+            </li>
+            <li>
+                <strong>Дата публікації:</strong>
+                <span property="datePublished">2004-03-15</span>
+            </li>
+            <li>
+                <strong>Жанр:</strong>
+                <span property="genre">Наукова фантастика</span>
+            </li>
+        </ul>
+    </section>
+</body>
+</html>
