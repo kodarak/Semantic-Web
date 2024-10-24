@@ -1,0 +1,21 @@
+# Запит для отримання населення країн Східної Європи
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbc: <http://dbpedia.org/resource/Category:>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT DISTINCT ?country ?countryLabel ?population
+WHERE {
+    # Вибираємо країни Східної Європи
+    ?country dct:subject dbc:Eastern_European_countries .
+    
+    # Отримуємо назву країни
+    ?country rdfs:label ?countryLabel .
+    FILTER(LANG(?countryLabel) = "en")
+    
+    # Отримуємо населення
+    ?country dbo:populationTotal ?population .
+}
+ORDER BY DESC(?population)
