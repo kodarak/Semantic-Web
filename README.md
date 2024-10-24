@@ -342,41 +342,11 @@ ORDER BY DESC(?population)
    - Перевірка належності до Східної Європи
 
 ### Результат
-|
- Країна 
-|
- Населення 
-|
-|
---------
-|
------------
-|
-|
- Russia 
-|
- 143447812 
-|
-|
- Poland 
-|
- 38422346  
-|
-|
- Ukraine
-|
- 41167336  
-|
-|
- Romania
-|
- 19237691  
-|
-|
- ... 
-|
- ... 
-|
+**HTML**
+![image](https://github.com/user-attachments/assets/9b715662-1178-4722-9d86-4e33c7d8b911)
+
+**Spreadsheet**
+![image](https://github.com/user-attachments/assets/bffd33ff-5ffd-46dc-bf39-8be6feb50bf8)
 
 ### Як використати
 1. Відкрийте [DBpedia SPARQL endpoint](http://dbpedia.org/sparql)
