@@ -1,0 +1,15 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?cityName ?foundingDate
+WHERE {
+    ?city a dbo:City ;
+          rdfs:label ?cityName ;
+          dbo:country dbr:Ukraine ;
+          dbo:foundingDate ?foundingDate .
+    
+    FILTER(LANG(?cityName) = "uk")
+}
+ORDER BY ?foundingDate
+LIMIT 1
