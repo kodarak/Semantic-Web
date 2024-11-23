@@ -1,0 +1,35 @@
+# Визначення префіксів для використання в запиті
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  # Для роботи з мітками
+PREFIX dct: <http://purl.org/dc/terms/>               # Для роботи з категоріями
+PREFIX dbc: <http://dbpedia.org/resource/Category:>    # Для конкретних категорій
+PREFIX dbo: <http://dbpedia.org/ontology/>            # Для онтології DBpedia
+
+# Вибір даних: країна, мітка та список мов
+SELECT ?country ?label (GROUP_CONCAT(DISTINCT UCASE(?languageLabel); separator="|") as ?languages)
+WHERE {
+ # Основна інформація про країну
+ ?country a <http://dbpedia.org/ontology/Country> ;  # Вибір сутностей типу "Країна"
+         rdfs:label ?label ;                         # Отримання назви країни
+         dct:subject ?category .                     # Зв'язок з категорією
+ 
+ # Фільтр для вибору країн тільки з Європи та Північної Америки
+ FILTER(
+   ?category = dbc:Countries_in_Europe ||
+   ?category = dbc:Countries_in_North_America
+ )
+ 
+ # Опціональний блок для отримання мов країни
+ OPTIONAL {
+   ?country dbo:officialLanguage ?language .         # Зв'язок з офіційними мовами
+   ?language rdfs:label ?languageLabel .             # Отримання назв мов
+   FILTER(LANG(?languageLabel) = "en")              # Фільтр для англійських назв мов
+ }
+ 
+ # Фільтри для назви країни
+ FILTER(LANG(?label) = "en")                        # Вибір англійських назв
+ FILTER(STRSTARTS(?label, "A"))                     # Вибір назв на літеру "A"
+}
+# Групування результатів за країною та назвою
+GROUP BY ?country ?label
+# Сортування за алфавітом
+ORDER BY ?label
