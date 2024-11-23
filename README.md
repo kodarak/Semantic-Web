@@ -361,3 +361,79 @@ ORDER BY DESC(?population)
 ## Файли
 - `query1.sparql` - файл з SPARQL запитом
 - `README.md` - документація
+
+## Завдання 2: Країни на літеру "А" та їх мови
+
+### SPARQL Запит
+
+```sparql
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dbc: <http://dbpedia.org/resource/Category:>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT ?country ?label (GROUP_CONCAT(DISTINCT UCASE(?languageLabel); separator="|") as ?languages)
+WHERE {
+  ?country a <http://dbpedia.org/ontology/Country> ;
+          rdfs:label ?label ;
+          dct:subject ?category .
+  
+  FILTER(
+    ?category = dbc:Countries_in_Europe ||
+    ?category = dbc:Countries_in_North_America
+  )
+  
+  OPTIONAL {
+    ?country dbo:officialLanguage ?language .
+    ?language rdfs:label ?languageLabel .
+    FILTER(LANG(?languageLabel) = "en")
+  }
+  
+  FILTER(LANG(?label) = "en")
+  FILTER(STRSTARTS(?label, "A"))
+}
+GROUP BY ?country ?label
+ORDER BY ?label
+```
+
+### Пояснення запиту
+1. **Префікси**:
+
+   - dbo: - DBpedia онтологія
+   - dbr: - DBpedia ресурси
+   - rdfs: - RDF Schema
+
+
+2. **Структура запиту**:
+
+   - SELECT вибирає країну, її назву та мови
+   - WHERE визначає умови пошуку
+   - GROUP BY групує результати за країною
+   - ORDER BY сортує за назвою країни
+
+
+3. **Фільтри**:
+
+   - Вибір лише англійських назв
+   - Початок назви на "A"
+   - Належність до Європи або Північної Америки
+
+
+
+### Результат
+**HTML**
+![image](https://github.com/user-attachments/assets/0fa83d84-4f5b-4474-bbdc-f29a68e6cb46)
+
+### Як використати
+1. Відкрийте [DBpedia SPARQL endpoint](http://dbpedia.org/sparql)
+2. Вставте запит
+3. Натисніть "Execute"
+
+### Особливості
+- Групування мов через символ "|"
+- Перетворення назв мов у верхній регістр
+- Включення країн без мов завдяки OPTIONAL
+
+## Файли
+- query2.sparql - файл з SPARQL запитом
+- README.md - документація
