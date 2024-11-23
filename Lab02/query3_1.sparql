@@ -1,0 +1,17 @@
+# Визначення префіксів для використання в запиті
+PREFIX dbo: <http://dbpedia.org/ontology/>    # Для онтології DBpedia
+PREFIX dbr: <http://dbpedia.org/resource/>    # Для ресурсів DBpedia
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  # Для роботи з мітками
+
+# Вибір даних: особа, її ім'я та дата народження
+SELECT ?person ?personLabel ?birthDate
+WHERE {
+    # Вибір лауреатів Нобелівської премії з фізики
+    ?person dbo:award dbr:Nobel_Prize_in_Physics ;    # Зв'язок з премією
+            rdfs:label ?personLabel ;                 # Отримання імені лауреата
+            dbo:birthDate ?birthDate .                # Отримання дати народження
+            
+    FILTER(LANG(?personLabel) = "en")                # Фільтр для англійських імен
+}
+# Сортування за датою народження (від найстаршого)
+ORDER BY ?birthDate
