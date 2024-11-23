@@ -1,0 +1,21 @@
+# Визначення префіксів
+PREFIX dbo: <http://dbpedia.org/ontology/>    # Для онтології DBpedia
+PREFIX dbr: <http://dbpedia.org/resource/>    # Для ресурсів DBpedia
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  # Для роботи з мітками
+
+# Вибір університетів та підрахунок лауреатів
+SELECT ?university ?universityLabel (COUNT(DISTINCT ?person) as ?laureateCount)
+WHERE {
+    # Зв'язок між лауреатами та університетами
+    ?person dbo:award dbr:Nobel_Prize_in_Physics ;    # Вибір лауреатів
+            dbo:almaMater ?university .               # Зв'язок з університетом
+            
+    ?university rdfs:label ?universityLabel .         # Отримання назви університету
+    FILTER(LANG(?universityLabel) = "en")            # Фільтр для англійських назв
+}
+# Групування для підрахунку лауреатів
+GROUP BY ?university ?universityLabel
+# Сортування за кількістю лауреатів (спадання)
+ORDER BY DESC(?laureateCount)
+# Обмеження до 10 результатів
+LIMIT 10
