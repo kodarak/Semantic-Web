@@ -1,0 +1,18 @@
+# Визначення префіксів
+PREFIX dbo: <http://dbpedia.org/ontology/>    # Для онтології DBpedia
+PREFIX dbr: <http://dbpedia.org/resource/>    # Для ресурсів DBpedia
+
+# Підрахунок кількості лауреатів-іммігрантів
+SELECT (COUNT(DISTINCT ?person) as ?immigrantCount)
+WHERE {
+    # Основна інформація про лауреата
+    ?person dbo:award dbr:Nobel_Prize_in_Physics ;        # Вибір лауреатів
+            dbo:birthPlace/dbo:country ?birthCountry ;    # Країна народження
+            dbo:almaMater ?university .                   # Університет навчання
+            
+    # Отримання країни університету
+    ?university dbo:country ?universityCountry .          # Країна університету
+    
+    # Перевірка на імміграцію: країна народження ≠ країна університету
+    FILTER(?birthCountry != ?universityCountry)
+}
