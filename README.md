@@ -54,9 +54,13 @@
 ### 4. Структура есе
 ```xml
 <rdf:Description rdf:about="http://example.org/essay">
-    <ex:hasPart rdf:resource="http://example.org/essay/intro"/>
-    <ex:hasPart rdf:resource="http://example.org/essay/main"/>
-    <ex:hasPart rdf:resource="http://example.org/essay/conclusion"/>
+  <ex:tableOfContents>
+    <rdf:Seq>
+      <rdf:_1 rdf:resource="http://example.org/essay/intro"/>
+      <rdf:_2 rdf:resource="http://example.org/essay/main"/>
+      <rdf:_3 rdf:resource="http://example.org/essay/conclusion"/>
+    </rdf:Seq>
+  </ex:tableOfContents>
 </rdf:Description>
 ```
 - Описує три частини есе
