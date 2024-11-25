@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ukraine City Guide - Презентація</title>
+    <meta charset="UTF-8" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap");
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Calibri", sans-serif;
+        font-size: 22px;
+        line-height: 1;
+        background: linear-gradient(45deg, #1a2980 0%, #26d0ce 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .slide {
+        width: 90vw;
+        height: 90vh;
+        padding: 2rem;
+        box-sizing: border-box;
+        position: relative;
+        display: none;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin: 5vh auto;
+        max-width: 1200px;
+        border-radius: 15px;
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .slide.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        color: #1a2980;
+        border-bottom: 3px solid #26d0ce;
+        padding-bottom: 0.8rem;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+      }
+
+      .slide-number {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        font-size: 20px;
+        font-weight: bold;
+        color: #1a2980;
+      }
+
+      .content {
+        margin: 0;
+        padding: 0;
+      }
+
+      .controls {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+      }
+
+      button {
+        font-size: 18px;
+        margin: 0 0.8rem;
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        border: none;
+        background: linear-gradient(45deg, #1a2980, #26d0ce);
+        color: white;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      #slideCounter {
+        color: #1a2980;
+        font-weight: bold;
+        margin: 0 1rem;
+      }
+
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #26d0ce, #1a2980);
+        transition: width 0.3s ease;
+        z-index: 1001;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 2rem;
+        list-style-type: disc;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+        transition: transform 0.2s ease;
+      }
+
+      li:hover {
+        transform: translateX(5px);
+      }
+
+      .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 1rem;
+      }
+
+      .diagram {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(26, 41, 128, 0.2);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .diagram:hover {
+        transform: scale(1.02);
+      }
+
+      .diagram img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .screenshots-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .screenshot-item {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .screenshot-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .screenshot {
+        width: 100%;
+        border-radius: 8px;
+        border: 2px solid rgba(26, 41, 128, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .screenshot:hover {
+        transform: scale(1.05);
+      }
+
+      strong {
+        color: #1a2980;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #1a2980, #26d0ce);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(45deg, #26d0ce, #1a2980);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div id="presentation"></div>
+    <div class="controls">
+      <button onclick="prevSlide()">Назад</button>
+      <span id="slideCounter"></span>
+      <button onclick="nextSlide()">Далі</button>
+    </div>
+
+    <script>
+      const slides = [
+        // Титульний слайд
+        {
+          content: `
+                <div style="text-align: center; padding-top: 15vh;">
+                    <div class="title" style="margin-bottom: 3rem;">
+                        Гід містами України
+                    </div>
+                    <div style="font-size: 28px; margin-bottom: 4rem;">
+                        Розробка десктопного додатку для дослідження міст України
+                    </div>
+                    <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <p>Виконав студент групи ІПЗм-11</p>
+                        <p style="font-size: 26px; margin-top: 1rem;">Гарбар Ілля</p>
+                    </div>
+                </div>
+            `,
+        },
+        // Аналіз предметної області
+        {
+          title: "Аналіз предметної області",
+          number: 2,
+          content: `
+            <div class="content">
+                <strong>актуальність:</strong>
+                <ul>
+                    <li>зростаюча потреба в структурованій інформації про міста України;</li>
+                    <li>відсутність єдиної системи для агрегації даних про міста;</li>
+                    <li>необхідність інтеграції різних джерел відкритих даних.</li>
+                </ul>
+                <strong>мета проєкту:</strong>
+                <p>розробка інтелектуальної системи для збору, аналізу та візуалізації інформації про міста України з використанням відкритих даних.</p>
+                <strong>задачі проєкту:</strong>
+                <ul>
+                    <li>створення архітектури для взаємодії з різними джерелами даних;</li>
+                    <li>розробка механізмів збору та валідації інформації;</li>
+                    <li>реалізація зручного користувацького інтерфейсу;</li>
+                    <li>впровадження функціоналу для аналізу та порівняння міст.</li>
+                </ul>
+            </div>
+        `,
+        },
+        // Постановка задачі
+        {
+          title: "Постановка задачі",
+          number: 3,
+          content: `
+            <div class="content">
+                <strong>основні задачі:</strong>
+                <ul>
+                    <li>інтеграція з Wikidata та SPARQL endpoints для отримання даних;</li>
+                    <li>розробка системи кешування для оптимізації швидкодії;</li>
+                    <li>створення інтерактивної карти міст України;</li>
+                    <li>реалізація системи статистичного аналізу.</li>
+                </ul>
+                <div class="two-columns">
+                    <div>
+                        <strong>вхідні дані:</strong>
+                        <ul>
+                            <li>дані з Wikidata;</li>
+                            <li>результати SPARQL-запитів;</li>
+                            <li>геолокаційні дані міст;</li>
+                            <li>статистична інформація.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>вихідні дані:</strong>
+                        <ul>
+                            <li>візуалізація на карті;</li>
+                            <li>статистичні графіки;</li>
+                            <li>порівняльні таблиці;</li>
+                            <li>детальна інформація про міста.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `,
+        },
+        // Аналіз варіантів використання
+        {
+          title: "Аналіз варіантів використання",
+          number: 4,
+          content: `
+           <div class="content">
+        <strong>Діаграма прецедентів системи демонструє взаємодію користувачів з системою:</strong>
+            <div class="diagram">
+                <img src="images/use-case-diagram.png" alt="Use Case Diagram" style="max-height: 400px;">
+            </div>
+               <div class="two-columns">
+                   <div>
+                       <strong>основні актори:</strong>
+                       <ul>
+                           <li>користувач системи;</li>
+                           <li>wikidata API;</li>
+                           <li>sparql сервіси.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>основні варіанти використання:</strong>
+                       <ul>
+                           <li>пошук міста;</li>
+                           <li>перегляд інформації про місто;</li>
+                           <li>перегляд карти;</li>
+                           <li>експорт даних;</li>
+                           <li>перегляд статистики.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+        // Open Linked Data
+        {
+          title: "Open Linked Data",
+          number: 5,
+          content: `
+       <div class="content">
+           <strong>Використані джерела відкритих даних:</strong>
+           <ul>
+               <li>wikidata - основне джерело структурованої інформації про міста;</li>
+               <li>sparql endpoints - для складних запитів та агрегації;</li>
+               <li>openStreetMap - для відображення карти.</li>
+           </ul>
+           <strong>Механізми роботи з даними:</strong>
+           <ul>
+               <li>асинхронні HTTP-запити до API;</li>
+               <li>кешування отриманих даних;</li>
+               <li>валідація та нормалізація даних;</li>
+               <li>періодичне оновлення інформації.</li>
+           </ul>
+           <strong>Схема потоків даних в системі:</strong>
+           <div class="diagram">
+               <img src="images/data-flow.png" alt="Data Flow Diagram" style="max-height: 300px;">
+           </div>
+       </div>
+   `,
+        },
+        // Діаграми діяльності
+        {
+          title: "Діаграми діяльності",
+          number: 6,
+          content: `
+           <div class="content">
+        <strong>Діаграма діяльності відображає основні процеси системи та їх послідовність:</strong>
+        <div class="diagram">
+            <img src="images/activity-diagram.png" alt="Activity Diagram" style="max-height: 400px;">
+        </div>
+               <div class="two-columns">
+                   <div>
+                       <strong>Основні процеси:</strong>
+                       <ul>
+                           <li>введення назви міста;</li>
+                           <li>перевірка кешу;</li>
+                           <li>запити до зовнішніх сервісів;</li>
+                           <li>агрегація даних;</li>
+                           <li>відображення результатів.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Особливості реалізації:</strong>
+                       <ul>
+                           <li>асинхронна обробка запитів;</li>
+                           <li>обробка помилок;</li>
+                           <li>оптимізація швидкодії;</li>
+                           <li>збереження стану системи.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+        // Архітектура
+        {
+          title: "Архітектура",
+          number: 7,
+          content: `
+           <div class="content">
+        <strong>Схема відображає розподіл компонентів системи між клієнтською та серверною частинами:</strong>
+        <div class="diagram">
+            <img src="images/architecture.png" alt="Architecture Diagram" style="max-height: 400px;">
+        </div>
+               <div class="two-columns">
+                   <div>
+                       <strong>Клієнтська частина:</strong>
+                       <ul>
+                           <li>pyQt6 - інтерфейс користувача;</li>
+                           <li>локальна SQLite база даних;</li>
+                           <li>система кешування;</li>
+                           <li>карта на основі OpenStreetMap.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Серверна взаємодія:</strong>
+                       <ul>
+                           <li>wikidata API інтеграція;</li>
+                           <li>sparql запити;</li>
+                           <li>REST API клієнти;</li>
+                           <li>механізми синхронізації.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+
+        // Дизайн
+        {
+          title: "Дизайн",
+          number: 8,
+          content: `
+          <div class="content">
+        <strong>UML діаграма класів показує структуру та взаємозв'язки між основними класами системи:</strong>
+        <div class="diagram">
+            <img src="images/class-diagram.png" alt="Class Diagram" style="max-height: 400px;">
+        </div>
+               <div class="two-columns">
+                   <div>
+                       <strong>Основні класи:</strong>
+                       <ul>
+                           <li>mainWindow - головне вікно програми;</li>
+                           <li>cityFrame - фрейм інформації про місто;</li>
+                           <li>mapFrame - фрейм з картою;</li>
+                           <li>cityService - сервіс роботи з даними.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Шаблони проектування:</strong>
+                       <ul>
+                           <li>model-View-Controller;</li>
+                           <li>singleton для сервісів;</li>
+                           <li>factory для створення об'єктів;</li>
+                           <li>observer для оновлень.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+
+        // Діаграми компонентів і пакетів
+        {
+          title: "Діаграми компонентів і пакетів",
+          number: 9,
+          content: `
+           <div class="content">
+        <strong>Діаграми демонструють організацію програмних компонентів та структуру проекту:</strong>
+        <div class="two-columns">
+                   <div>
+                       <strong>Діаграма компонентів:</strong>
+                       <div class="diagram">
+                           <img src="images/component-diagram.png" alt="Component Diagram" style="max-height: 300px;">
+                       </div>
+                       <ul>
+                           <li>GUI компоненти;</li>
+                           <li>сервісний шар;</li>
+                           <li>шар доступу до даних;</li>
+                           <li>зовнішні сервіси.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Діаграма пакетів:</strong>
+                       <div class="diagram">
+                           <img src="images/package-diagram.png" alt="Package Diagram" style="max-height: 300px;">
+                       </div>
+                       <ul>
+                           <li>структура проекту;</li>
+                           <li>залежності між модулями;</li>
+                           <li>організація коду.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+
+        // Засоби реалізації
+        {
+          title: "Засоби реалізації",
+          number: 10,
+          content: `
+           <div class="content">
+               <div class="two-columns">
+                   <div>
+                       <strong>Програмне забезпечення:</strong>
+                       <ul>
+                           <li>python 3.8+ як основна мова розробки;</li>
+                           <li>pyQt6 для створення графічного інтерфейсу;</li>
+                           <li>SQLite для локального зберігання даних;</li>
+                           <li>requests для HTTP-запитів;</li>
+                           <li>sparqlWrapper для роботи з SPARQL;</li>
+                           <li>matplotlib для візуалізації даних.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Управління проектом:</strong>
+                       <ul>
+                           <li>git для версіонування коду;</li>
+                           <li>gitHub для хостингу репозиторію;</li>
+                           <li>pytest для модульного тестування;</li>
+                           <li>coverage для аналізу покриття тестами;</li>
+                           <li>black для форматування коду;</li>
+                           <li>pylint для статичного аналізу.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+
+        // Екрани застосунку
+        {
+          title: "Екрани застосунку",
+          number: 11,
+          content: `
+           <div class="content">
+               <div class="screenshots-grid">
+                   <div class="screenshot-item">
+                       <strong>Головне вікно з пошуком:</strong>
+                       <img src="images/main-search.png" alt="Головне вікно з пошуком" class="screenshot">
+                   </div>
+                   <div class="screenshot-item">
+                       <strong>Інформація про місто:</strong>
+                       <img src="images/city-info.png" alt="Інформація про місто" class="screenshot">
+                   </div>
+                   <div class="screenshot-item">
+                       <strong>Інтерактивна карта:</strong>
+                       <img src="images/city-map.png" alt="Карта міста" class="screenshot">
+                   </div>
+                   <div class="screenshot-item">
+                       <strong>Статистика:</strong>
+                       <img src="images/statistics.png" alt="Статистика" class="screenshot">
+                   </div>
+               </div>
+               <div class="two-columns" style="margin-top: 1rem;">
+                   <div>
+                       <strong>Особливості інтерфейсу:</strong>
+                       <ul>
+                           <li>зручна навігація через вкладки;</li>
+                           <li>інтерактивна карта з маркерами міст;</li>
+                           <li>детальна інформація про кожне місто;</li>
+                           <li>візуалізація статистичних даних.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Функціональність:</strong>
+                       <ul>
+                           <li>пошук міст за назвою;</li>
+                           <li>фільтрація за населенням;</li>
+                           <li>експорт даних;</li>
+                           <li>оновлення статистики.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+
+        // Висновки
+        {
+          title: "Висновки",
+          number: 12,
+          content: `
+           <div class="content">
+               <strong>Практичні результати:</strong>
+               <ul>
+                   <li>розроблено повнофункціональну систему для дослідження міст України;</li>
+                   <li>реалізовано інтеграцію з Wikidata та SPARQL для отримання даних;</li>
+                   <li>створено зручний користувацький інтерфейс з інтерактивною картою;</li>
+                   <li>впроваджено систему статистичного аналізу даних.</li>
+               </ul>
+               <div class="two-columns">
+                   <div>
+                       <strong>Кількісні показники:</strong>
+                       <ul>
+                           <li>покриття тестами: 80%;</li>
+                           <li>час відповіді системи: < 2 сек;</li>
+                           <li>кількість оброблених міст: > 100;</li>
+                           <li>обсяг зібраних даних: > 1000 записів.</li>
+                       </ul>
+                   </div>
+                   <div>
+                       <strong>Якісні показники:</strong>
+                       <ul>
+                           <li>висока точність даних;</li>
+                           <li>зручний інтерфейс користувача;</li>
+                           <li>надійність роботи системи;</li>
+                           <li>можливість розширення функціоналу.</li>
+                       </ul>
+                   </div>
+               </div>
+           </div>
+       `,
+        },
+      ];
+
+      let currentSlide = 0;
+
+      function renderSlide(index) {
+        const slide = slides[index];
+        const presentation = document.getElementById("presentation");
+
+        let html = `<div class="slide active">`;
+        if (slide.title) {
+          html += `<div class="title">${slide.title}</div>`;
+        }
+        html += slide.content;
+        if (slide.number) {
+          html += `<div class="slide-number">${slide.number}</div>`;
+        }
+        html += `</div>`;
+
+        presentation.innerHTML = html;
+
+        // Оновлення прогрес-бару
+        const progress = ((index + 1) / slides.length) * 100;
+        document.getElementById("progressBar").style.width = `${progress}%`;
+
+        // Оновлення лічильника слайдів
+        document.getElementById("slideCounter").textContent = `${index + 1} / ${
+          slides.length
+        }`;
+      }
+
+      function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          renderSlide(currentSlide);
+        }
+      }
+
+      function prevSlide() {
+        if (currentSlide > 0) {
+          currentSlide--;
+          renderSlide(currentSlide);
+        }
+      }
+
+      // Навігація за допомогою клавіш
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          nextSlide();
+        } else if (e.key === "ArrowLeft") {
+          prevSlide();
+        }
+      });
+
+      // Показати перший слайд при завантаженні
+      renderSlide(0);
+    </script>
+  </body>
+</html>
